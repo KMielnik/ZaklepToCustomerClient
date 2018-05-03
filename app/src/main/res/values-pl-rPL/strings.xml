@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ZaklepTo</string>
+    <string name="sign_up">Zarejestruj się</string>
+    <string name="sign_in">Zaloguj się</string>
+    <string name="enter_as_guest">Wejdź jako gość</string>
+    <string name="are_you_actually_user">Jesteś już naszym użytkownikiem?</string>
+    <string name="prompt_email">E-mail</string>
+    <string name="prompt_password">Hasło</string>
+    <string name="action_sign_in">Zaloguj się</string>
+    <string name="action_sign_in_short">Zaloguj się</string>
+    <string name="error_invalid_email">Nieprawidłowy email</string>
+    <string name="error_invalid_password">Hasło jest zbyt krótkie</string>
+    <string name="error_incorrect_password">Nieprawidłowe hasło</string>
+    <string name="error_field_required">Pole wymagane</string>
+    <string name="permission_rationale">Potrzebne kontakty</string>
+    <string name="prompt_login">Login</string>
+    <string name="title_activity_sign_in">Zaloguj się</string>
+    <string name="title_activity_sign_up">Zarejestruj się</string>
+    <string name="action_sign_up">Zarejestruj się</string>
+    <string name="prompt_password_confirm">Potwierdź hasło</string>
+    <string name="prompt_first_name">Imię</string>
+    <string name="prompt_last_name">Nazwisko</string>
+    <string name="prompt_phone_number">Numer telefonu</string>
+    <string name="title_activity_city_selection">Wybierz swoje miasto</string>
+    <string name="select">Wybierz</string>
+    <string name="title_activity_browse">Przeglądaj restauracje</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="cousine">Kuchnia</string>
+    <string name="your_reservations">Twoje rezerwacje</string>
+    <string name="browse_restaurants">Przeglądaj restauracje</string>
+    <string name="account">Profil</string>
+    <string name="find_free_table">Znajdź wolny stolik</string>
+</resources>

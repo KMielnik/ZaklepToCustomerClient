@@ -1,0 +1,8 @@
+<resources>
+
+    <string-array name="SpinnerTest">
+        <item>Elo</item>
+        <item>Pomelo</item>
+        <item>Iksdeło</item>
+    </string-array>
+</resources>
