@@ -1,6 +1,7 @@
 package to.zaklep.zakleptocustomerclient
 
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -19,7 +20,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onSignInButtonClicked(view: View) {
-
+        val intent = Intent(this, SignInActivity::class.java)
+        startActivity(intent)
     }
 
     fun onGuestButtonClicked(view: View) {
