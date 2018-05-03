@@ -15,8 +15,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onSignUpButtonClicked(view: View) {
-
-
+        val intent = Intent(this, SignUpActivity::class.java)
+        startActivity(intent)
     }
 
     fun onSignInButtonClicked(view: View) {
@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onGuestButtonClicked(view: View) {
-
+        val intent = Intent(this, CitySelectionActivity::class.java)
+        startActivity(intent)
     }
 }

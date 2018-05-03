@@ -18,9 +18,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignInActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".CitySelectionActivity" />
+        <activity
+            android:name=".SignInActivity"
+            android:label="@string/title_activity_sign_in" />
+        <activity
+            android:name=".SignUpActivity"
+            android:label="@string/title_activity_sign_up" />
+        <activity
+            android:name=".CitySelectionActivity"
+            android:label="@string/title_activity_city_selection" />
         <activity
             android:name=".BrowseActivity"
             android:label="@string/title_activity_browse"
