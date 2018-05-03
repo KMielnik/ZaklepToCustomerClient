@@ -19,7 +19,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignInActivity" />
-        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".CitySelectionActivity" />
+        <activity
+            android:name=".BrowseActivity"
+            android:label="@string/title_activity_browse"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
