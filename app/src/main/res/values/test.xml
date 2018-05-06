@@ -1,8 +1,10 @@
 <resources>
 
     <string-array name="SpinnerTest">
-        <item>Elo</item>
-        <item>Pomelo</item>
-        <item>Iksdeło</item>
+        <item>Wszystkie</item>
+        <item>Chinska</item>
+        <item>Hiszpanska</item>
+        <item>Polska</item>
+        <item>Wloska</item>
     </string-array>
 </resources>

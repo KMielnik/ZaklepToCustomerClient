@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="to.zaklep.zakleptocustomerclient">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -30,6 +32,10 @@
         <activity
             android:name=".BrowseActivity"
             android:label="@string/title_activity_browse"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RestaurantPageActivity"
+            android:label="@string/title_activity_restaurant_page"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

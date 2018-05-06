@@ -26,9 +26,10 @@
     <string name="select">Wybierz</string>
     <string name="title_activity_browse">Przeglądaj restauracje</string>
     <string name="action_settings">Ustawienia</string>
-    <string name="cousine">Kuchnia</string>
+    <string name="cousine">Kuchnia:</string>
     <string name="your_reservations">Twoje rezerwacje</string>
     <string name="browse_restaurants">Przeglądaj restauracje</string>
     <string name="account">Profil</string>
     <string name="find_free_table">Znajdź wolny stolik</string>
+    <string name="description">Opis</string>
 </resources>

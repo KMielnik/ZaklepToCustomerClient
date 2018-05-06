@@ -118,7 +118,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
-    <string name="cousine">Cousine</string>
+    <string name="cousine">Cousine:</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -128,4 +128,6 @@
     <string name="find_free_table">Find free table</string>
     <string name="browse_restaurants">Browse restaurants</string>
     <string name="your_reservations">Your reservations</string>
+    <string name="description">Description</string>
+    <string name="title_activity_restaurant_page">RestaurantPageActivity</string>
 </resources>
