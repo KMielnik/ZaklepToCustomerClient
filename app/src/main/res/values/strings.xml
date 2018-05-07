@@ -131,4 +131,12 @@
     <string name="description">Description</string>
     <string name="title_activity_restaurant_page">RestaurantPageActivity</string>
     <string name="book">Book</string>
+    <string name="week_days">Monday\nTuesday\nWednesday\nThursday\nFriday\nSaturday\nSunday</string>
+    <string name="opening_hours">Opening hours:</string>
+    <string name="title_activity_reservations">Your reservations</string>
+    <string name="cancel">Cancel</string>
+    <string name="cancel_reservation">Cancel</string>
+    <string name="confirmed">Confirmed?</string>
+    <string name="date">Date:</string>
+    <string name="time">Time:</string>
 </resources>

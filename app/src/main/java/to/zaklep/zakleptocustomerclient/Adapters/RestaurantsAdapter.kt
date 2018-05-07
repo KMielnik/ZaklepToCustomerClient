@@ -3,8 +3,6 @@ package to.zaklep.zakleptocustomerclient.Adapters
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.ColorFilter
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +11,6 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.restaurant_card.*
-import to.zaklep.zakleptocustomerclient.BrowseActivity
 import to.zaklep.zakleptocustomerclient.Models.Restaurant
 import to.zaklep.zakleptocustomerclient.R
 import to.zaklep.zakleptocustomerclient.RestaurantPageActivity

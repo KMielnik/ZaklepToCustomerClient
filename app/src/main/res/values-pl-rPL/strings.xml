@@ -33,4 +33,13 @@
     <string name="find_free_table">Znajdź wolny stolik</string>
     <string name="description">Opis</string>
     <string name="book">Zarezerwuj</string>
+    <string name="week_days">Poniedziałek\nWtorek\nŚroda\nCzwartek\nPiatek\nSobota\nNiedziela</string>
+    <string name="opening_hours">Godziny otwarcia:</string>
+    <string name="title_activity_restaurant_page">Wybrana restauracja</string>
+    <string name="title_activity_reservations">Twoje rezerwacje</string>
+    <string name="cancel">Usuń</string>
+    <string name="cancel_reservation">Odwołaj</string>
+    <string name="confirmed">Potwierdzona?</string>
+    <string name="date">Data:</string>
+    <string name="time">Godzina:</string>
 </resources>

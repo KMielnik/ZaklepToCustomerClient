@@ -36,6 +36,10 @@
         <activity
             android:name=".RestaurantPageActivity"
             android:label="@string/title_activity_restaurant_page"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ReservationsActivity"
+            android:label="@string/title_activity_reservations"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

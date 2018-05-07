@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="all">
+        <item
+            android:id="@+id/nav_account"
+            android:icon="@drawable/nav_account"
+            android:title="@string/account" />
+        <item
+            android:id="@+id/nav_find_free_table"
+            android:icon="@drawable/nav_find_table"
+            android:title="@string/find_free_table" />
+        <item
+            android:id="@+id/nav_browse_restaurants"
+            android:icon="@drawable/nav_browse_restaurants"
+            android:title="@string/browse_restaurants" />
+        <item
+            android:id="@+id/nav_reservations"
+            android:icon="@drawable/nav_reservations"
+            android:title="@string/your_reservations" />
+    </group>
+
+</menu>

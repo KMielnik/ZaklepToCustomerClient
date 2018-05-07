@@ -1,9 +1,8 @@
 package to.zaklep.zakleptocustomerclient
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.os.SystemClock
-import android.provider.Contacts
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -11,20 +10,17 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
 import com.github.kittinunf.fuel.gson.responseObject
 import com.github.kittinunf.fuel.httpGet
-import com.github.kittinunf.result.failure
 import kotlinx.android.synthetic.main.activity_restaurant_page.*
 import kotlinx.android.synthetic.main.app_bar_restaurant_page.*
 import kotlinx.android.synthetic.main.content_restaurant_page.*
-import kotlinx.android.synthetic.main.restaurant_card.*
 import to.zaklep.zakleptocustomerclient.Models.Restaurant
-import kotlin.concurrent.thread
 
 class RestaurantPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+
+    var isOpenHoursLayoutOpen = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,16 +49,16 @@ class RestaurantPageActivity : AppCompatActivity(), NavigationView.OnNavigationI
                 }
 
 
-        expand_button.setOnClickListener {
-            expand_button.visibility = View.GONE
-            hide_button.visibility = View.VISIBLE
-            restaurant_open_hours.setLines(7)
-        }
-
-        hide_button.setOnClickListener {
-            hide_button.visibility = View.GONE
-            expand_button.visibility = View.VISIBLE
-            restaurant_open_hours.setLines(1)
+        restaurant_open_hours_layout.setOnClickListener {
+            if (!isOpenHoursLayoutOpen) {
+                expand_button.rotation = 180.0f
+                restaurant_open_hours.setLines(7)
+                isOpenHoursLayoutOpen = true
+            } else {
+                expand_button.rotation = 0.0f
+                restaurant_open_hours.setLines(1)
+                isOpenHoursLayoutOpen = false
+            }
         }
     }
 
@@ -70,6 +66,13 @@ class RestaurantPageActivity : AppCompatActivity(), NavigationView.OnNavigationI
         toolbar_layout.title = restaurant.name
         restaurant_description.text = restaurant.description
         restaurant_cousine_page.text = restaurant.cuisine
+        restaurant_adress.text = restaurant.localization
+
+        restaurant_adress_googlemaps.setOnClickListener {
+            var intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("https://www.google.com/maps/search/" + restaurant.name + '+' + restaurant.localization)
+            startActivity(intent)
+        }
     }
 
     override fun onBackPressed() {
@@ -110,7 +113,8 @@ class RestaurantPageActivity : AppCompatActivity(), NavigationView.OnNavigationI
                 startActivity(intent)
             }
             R.id.nav_reservations -> {
-
+                val intent = Intent(this, ReservationsActivity::class.java)
+                startActivity(intent)
             }
         }
 
