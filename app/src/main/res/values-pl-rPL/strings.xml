@@ -32,4 +32,5 @@
     <string name="account">Profil</string>
     <string name="find_free_table">Znajdź wolny stolik</string>
     <string name="description">Opis</string>
+    <string name="book">Zarezerwuj</string>
 </resources>

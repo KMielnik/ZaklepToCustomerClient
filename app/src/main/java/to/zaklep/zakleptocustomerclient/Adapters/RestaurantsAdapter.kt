@@ -22,7 +22,13 @@ import to.zaklep.zakleptocustomerclient.RestaurantPageActivity
 class RestaurantsAdapter(var mContext: Context, var restaurantList: List<Restaurant>) : RecyclerView.Adapter<RestaurantsAdapter.MyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         var itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.restaurant_card, parent, false)
-        return MyViewHolder(itemView)
+        var holder = MyViewHolder(itemView)
+        holder.itemView.setOnClickListener {
+            val intent = Intent(itemView.context, RestaurantPageActivity::class.java)
+            intent.putExtra("ID", restaurantList[holder.adapterPosition].id)
+            itemView.context.startActivity(intent)
+        }
+        return holder
     }
 
     override fun getItemCount(): Int {
@@ -41,13 +47,6 @@ class RestaurantsAdapter(var mContext: Context, var restaurantList: List<Restaur
 
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        init {
-            itemView.setOnClickListener {
-                val intent = Intent(itemView.context, RestaurantPageActivity::class.java)
-                startActivity(itemView.context, intent, null)
-            }
-        }
-
         var restaurantName: TextView = itemView.findViewById(R.id.restaurant_name)
         var restaurantCuisine: TextView = itemView.findViewById(R.id.restaurant_cousine)
         var restaurantPhoto: ImageView = itemView.findViewById(R.id.restaurant_photo)
