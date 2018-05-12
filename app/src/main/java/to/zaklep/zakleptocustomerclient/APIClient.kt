@@ -111,6 +111,13 @@ class APIClient {
         return@async reservations
     }
 
+    fun DeleteReservation(reservation: Reservation) = async(CommonPool) {
+        Fuel.delete("reservations/${reservation.id}/remove")
+                .body(reservation.id)
+                .response()
+        return@async
+    }
+
     val gson = Gson()
     private inline fun <reified T : Any> Deserialize(json: String?): T = gson.fromJson(json, T::class.java)
 

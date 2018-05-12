@@ -1,6 +1,9 @@
 package to.zaklep.zakleptocustomerclient.Adapters
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.support.annotation.UiThread
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +12,9 @@ import android.widget.*
 import com.bumptech.glide.Glide
 import com.google.gson.internal.bind.util.ISO8601Utils
 import kotlinx.android.synthetic.main.reservation_card.view.*
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.android.UI
+import to.zaklep.zakleptocustomerclient.APIClient
 import to.zaklep.zakleptocustomerclient.Models.Reservation
 import to.zaklep.zakleptocustomerclient.R
 import java.text.SimpleDateFormat
@@ -16,7 +22,10 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class ReservationsAdapter(var mContext: Context, var reservationsList: List<Reservation>) : RecyclerView.Adapter<ReservationsAdapter.MyViewHolder>() {
+class ReservationsAdapter(var mContext: Context, var reservationsList: MutableList<Reservation>) : RecyclerView.Adapter<ReservationsAdapter.MyViewHolder>() {
+
+    val apiClient = APIClient()
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         var reservation: Reservation = reservationsList.get(position)
         holder.restaurantName.text = reservation.restaurant.name
@@ -26,8 +35,31 @@ class ReservationsAdapter(var mContext: Context, var reservationsList: List<Rese
         holder.reservationDate.text = reservation.dateStart.substringBefore('T')
         holder.reservationHour.text = reservation.dateStart.substringAfter('T').substringBeforeLast(':') + "-" + reservation.dateEnd.substringAfter('T').substringBeforeLast(':')
         holder.cancelReservation.setOnClickListener {
-            Toast.makeText(mContext, "DELETED", Toast.LENGTH_LONG).show()
+            val builder = AlertDialog.Builder(mContext, android.R.style.Theme_Material_Light_Dialog_Alert)
+            builder.setTitle("Delete reservation")
+                    .setMessage("Are you sure?")
+                    .setCancelable(true)
+                    .setPositiveButton(android.R.string.yes, DialogInterface.OnClickListener { dialog, which ->
+                        run {
+                            reservationsList.remove(reservation)
+                            notifyItemRemoved(position)
+                            DeleteReservation(reservation)
+                            dialog.dismiss()
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, DialogInterface.OnClickListener { dialog, which ->
+                        dialog.dismiss()
+                    })
+                    .create().show()
+
+
         }
+
+    }
+
+    fun DeleteReservation(reservation: Reservation) = launch(UI) {
+        apiClient.DeleteReservation(reservation).await()
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservationsAdapter.MyViewHolder {
