@@ -2,9 +2,9 @@
 
     <string-array name="SpinnerTest">
         <item>Wszystkie</item>
-        <item>Chinska</item>
+        <item>Chińska</item>
         <item>Hiszpanska</item>
         <item>Polska</item>
-        <item>Wloska</item>
+        <item>Włoska</item>
     </string-array>
 </resources>

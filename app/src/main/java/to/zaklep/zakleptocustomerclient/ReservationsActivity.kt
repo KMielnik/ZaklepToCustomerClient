@@ -22,22 +22,21 @@ import kotlinx.android.synthetic.main.activity_reservations.*
 import kotlinx.android.synthetic.main.app_bar_reservations.*
 import kotlinx.android.synthetic.main.content_browse.*
 import kotlinx.android.synthetic.main.content_reservations.*
+import kotlinx.coroutines.experimental.launch
 import to.zaklep.zakleptocustomerclient.Adapters.ReservationsAdapter
 import to.zaklep.zakleptocustomerclient.Models.Reservation
+import kotlinx.coroutines.experimental.android.UI
+
 
 class ReservationsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    val apiClient = APIClient()
     private val ReservationsList: MutableList<Reservation> = mutableListOf<Reservation>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reservations)
         setSupportActionBar(toolbar)
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -46,22 +45,16 @@ class ReservationsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        FuelManager.instance.apply {
-            basePath = "http://zakleptoapi.azurewebsites.net/api/"
 
-        }
+        SetReservations()
+    }
 
-        var adapter: ReservationsAdapter = ReservationsAdapter(this, ReservationsList)
+    fun SetReservations() = launch(UI) {
+        var adapter = ReservationsAdapter(this@ReservationsActivity, ReservationsList)
+        ReservationsList.addAll(apiClient.GetActiveReservations().await())
+        adapter.notifyDataSetChanged()
 
-        "reservations/321321/customer3".httpGet()
-                .responseObject<List<Reservation>> { request, response, result ->
-                    result.get().forEach {
-                        ReservationsList.add(it)
-                    }
-                    adapter.notifyDataSetChanged()
-                }
-
-        var mLayoutManager = LinearLayoutManager(this)
+        var mLayoutManager = LinearLayoutManager(this@ReservationsActivity)
         reservations_list.layoutManager = mLayoutManager
         reservations_list.addItemDecoration(GridSpacingItemDecoration(1, dpToPx(10), true))
         reservations_list.itemAnimator = DefaultItemAnimator()
@@ -120,10 +113,12 @@ class ReservationsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_account -> {
-
+                val intent = Intent(this, ProfileActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_find_free_table -> {
-
+                val intent = Intent(this, FindTableActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_browse_restaurants -> {
                 val intent = Intent(this, BrowseActivity::class.java)

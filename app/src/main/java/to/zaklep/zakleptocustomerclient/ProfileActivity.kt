@@ -1,7 +1,6 @@
 package to.zaklep.zakleptocustomerclient
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
@@ -10,30 +9,22 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.bumptech.glide.Glide
-import com.github.kittinunf.fuel.gson.responseObject
-import com.github.kittinunf.fuel.httpGet
-import kotlinx.android.synthetic.main.activity_restaurant_page.*
-import kotlinx.android.synthetic.main.app_bar_restaurant_page.*
-import kotlinx.android.synthetic.main.content_restaurant_page.*
-import to.zaklep.zakleptocustomerclient.Models.Restaurant
-
-class RestaurantPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.activity_sign_in.*
+import kotlinx.android.synthetic.main.app_bar_profile.*
+import kotlinx.android.synthetic.main.content_profile.*
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.android.UI
 
 
-    var isOpenHoursLayoutOpen = false
+class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    val apiClient = APIClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_restaurant_page)
+        setContentView(R.layout.activity_profile)
         setSupportActionBar(toolbar)
-
-
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -42,40 +33,13 @@ class RestaurantPageActivity : AppCompatActivity(), NavigationView.OnNavigationI
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        var restaurant: Restaurant
-        //Downloading restaurant
-        "restaurants/${intent.getStringExtra("ID")}".httpGet()
-                .responseObject<Restaurant>() { request, response, result ->
-                    setPage(result.get())
-                }
-
-
-        restaurant_open_hours_layout.setOnClickListener {
-            if (!isOpenHoursLayoutOpen) {
-                expand_button.rotation = 180.0f
-                restaurant_open_hours.setLines(7)
-                isOpenHoursLayoutOpen = true
-            } else {
-                expand_button.rotation = 0.0f
-                restaurant_open_hours.setLines(1)
-                isOpenHoursLayoutOpen = false
-            }
-        }
+        SetProfile()
     }
 
-    fun setPage(restaurant: Restaurant) {
-        toolbar_layout.title = restaurant.name
-        restaurant_description.text = restaurant.description.replace("\r", "").replace("                    ", " ")
-        restaurant_cousine_page.text = restaurant.cuisine
-        restaurant_adress.text = restaurant.localization
+    private fun SetProfile() = launch(UI) {
+        var customer = apiClient.GetProfile().await()
 
-        Glide.with(this).load(restaurant.representativePhotoUrl).into(restaurant_photo)
-
-        restaurant_adress_googlemaps.setOnClickListener {
-            var intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse("https://www.google.com/maps/search/" + restaurant.name + '+' + restaurant.localization)
-            startActivity(intent)
-        }
+        login_text.text.append(customer.login)
     }
 
     override fun onBackPressed() {
@@ -88,7 +52,7 @@ class RestaurantPageActivity : AppCompatActivity(), NavigationView.OnNavigationI
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.restaurant_page, menu)
+        menuInflater.inflate(R.menu.profile, menu)
         return true
     }
 

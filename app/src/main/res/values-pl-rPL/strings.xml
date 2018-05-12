@@ -42,4 +42,9 @@
     <string name="confirmed">Potwierdzona?</string>
     <string name="date">Data:</string>
     <string name="time">Godzina:</string>
+    <string name="account_details">Szczegóły konta</string>
+    <string name="change_password">Zmień hasło</string>
+    <string name="update">Zaktualizuj</string>
+    <string name="title_activity_profile">Profil użytkownika</string>
+    <string name="title_activity_find_table">Znajdź stolik</string>
 </resources>

@@ -1,7 +1,6 @@
 package to.zaklep.zakleptocustomerclient
 
 import android.content.Intent
-import android.graphics.Rect
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
@@ -10,50 +9,48 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.TypedValue
 import android.view.*
 import android.view.animation.AnimationUtils
-import android.widget.AdapterView
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.gson.responseObject
 import com.github.kittinunf.fuel.httpGet
-import kotlinx.android.synthetic.main.activity_browse.*
-import kotlinx.android.synthetic.main.app_bar_browse.*
-import kotlinx.android.synthetic.main.content_browse.*
+import kotlinx.android.synthetic.main.activity_find_table.*
+import kotlinx.android.synthetic.main.app_bar_find_table.*
+import kotlinx.android.synthetic.main.content_find_table.*
 import to.zaklep.zakleptocustomerclient.Adapters.RestaurantsAdapter
+import to.zaklep.zakleptocustomerclient.Adapters.RestaurantsTablesAdapter
 import to.zaklep.zakleptocustomerclient.Models.Restaurant
 
-class BrowseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    val apiClient = APIClient()
-
-    private val RestaurantList: MutableList<Restaurant> = mutableListOf<Restaurant>()
-    private var filteredRestaurantList: MutableList<Restaurant> = mutableListOf<Restaurant>()
+class FindTableActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_browse)
+        setContentView(R.layout.activity_find_table)
         setSupportActionBar(toolbar)
+
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
+        nav_view.setNavigationItemSelectedListener(this)
 
         FuelManager.instance.apply {
             basePath = "http://zakleptoapi.azurewebsites.net/api/"
 
         }
 
-        var adapter: RestaurantsAdapter = RestaurantsAdapter(this, filteredRestaurantList)
+        var filteredRestaurantList: MutableList<Restaurant> = mutableListOf<Restaurant>()
+
+        var adapter = RestaurantsTablesAdapter(this, filteredRestaurantList)
 
         //Downloading restaurants from api
         "restaurants".httpGet()
                 .responseObject<List<Restaurant>> { request, response, result ->
                     result.get().forEach {
-                        RestaurantList.add(it)
+
                         filteredRestaurantList.add(it)
                     }
                     adapter.notifyDataSetChanged()
@@ -63,64 +60,11 @@ class BrowseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
         var mLayoutManager = LinearLayoutManager(this)
         restaurants_list.layoutManager = mLayoutManager
-        restaurants_list.addItemDecoration(GridSpacingItemDecoration(1, dpToPx(10), true))
+        restaurants_list.addItemDecoration(BrowseActivity.GridSpacingItemDecoration(1, dpToPx(10), true))
         restaurants_list.itemAnimator = DefaultItemAnimator()
         restaurants_list.adapter = adapter
 
         nav_view.setNavigationItemSelectedListener(this)
-
-        cousine_filter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position == 0) {
-                    onNothingSelected(parent)
-                    return
-                }
-                filteredRestaurantList.clear()
-                RestaurantList.filter { x -> x.cuisine == parent?.getItemAtPosition(position).toString() }.forEach() {
-                    filteredRestaurantList.add(it)
-                }
-                adapter.notifyDataSetChanged()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                filteredRestaurantList.clear()
-                RestaurantList.forEach() {
-                    filteredRestaurantList.add(it)
-                }
-                adapter.notifyDataSetChanged()
-            }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (!(apiClient.isLoggedIn() || apiClient.isUnregisteredUser()))
-            GoToMainActivity()
-    }
-
-
-    class GridSpacingItemDecoration(private val spanCount: Int, private val spacing: Int, private val includeEdge: Boolean) : RecyclerView.ItemDecoration() {
-
-        override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
-            val position = parent.getChildAdapterPosition(view) // item position
-            val column = position % spanCount // item column
-
-            if (includeEdge) {
-                outRect.left = spacing - column * spacing / spanCount // spacing - column * ((1f / spanCount) * spacing)
-                outRect.right = (column + 1) * spacing / spanCount // (column + 1) * ((1f / spanCount) * spacing)
-
-                if (position < spanCount) { // top edge
-                    outRect.top = spacing
-                }
-                outRect.bottom = spacing // item bottom
-            } else {
-                outRect.left = column * spacing / spanCount // column * ((1f / spanCount) * spacing)
-                outRect.right = spacing - (column + 1) * spacing / spanCount // spacing - (column + 1) * ((1f /    spanCount) * spacing)
-                if (position >= spanCount) {
-                    outRect.top = spacing // item top
-                }
-            }
-        }
     }
 
     var isHiddenPanelShown: Boolean = true
@@ -159,7 +103,7 @@ class BrowseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.browse, menu)
+        menuInflater.inflate(R.menu.find_table, menu)
         return true
     }
 
@@ -201,10 +145,5 @@ class BrowseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     private fun dpToPx(dp: Int): Int {
         val r = getResources()
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), r.getDisplayMetrics()))
-    }
-
-    private fun GoToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
     }
 }

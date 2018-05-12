@@ -14,11 +14,6 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".SignInActivity"
@@ -31,8 +26,12 @@
             android:label="@string/title_activity_city_selection" />
         <activity
             android:name=".BrowseActivity"
-            android:label="@string/title_activity_browse"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".RestaurantPageActivity"
             android:label="@string/title_activity_restaurant_page"
@@ -40,7 +39,19 @@
         <activity
             android:name=".ReservationsActivity"
             android:label="@string/title_activity_reservations"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FindTableActivity"
+            android:label="@string/title_activity_find_table"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
