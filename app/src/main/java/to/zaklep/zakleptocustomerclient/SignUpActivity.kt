@@ -28,16 +28,21 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     fun onSignupButtonClicked(view: View) = launch(UI) {
+        if (password.text != password_confirm.text) {
+            password_confirm.error = "Hasła muszą sie zgadzać"
+        } else if (password.length() < 3) {
+            password.error = "Hasło musi mieć minimum 3 znaki"
+        } else {
+            var result = apiClient.SignUpAsync(
+                    first_name.text.toString(),
+                    last_name.text.toString(),
+                    phone_number.text.toString(),
+                    login.text.toString(),
+                    email.text.toString(),
+                    password.text.toString()).await()
+            GoToCitySelection()
+        }
 
-        (view as Button).text = "RERERE"
-        var result = apiClient.SignUpAsync(
-                first_name.text.toString(),
-                last_name.text.toString(),
-                phone_number.text.toString(),
-                login.text.toString(),
-                email.text.toString(),
-                password.text.toString()).await()
-        GoToCitySelection()
 
     }
 

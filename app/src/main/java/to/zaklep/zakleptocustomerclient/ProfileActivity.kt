@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.app_bar_profile.*
 import kotlinx.android.synthetic.main.content_profile.*
+import kotlinx.android.synthetic.main.nav_header_browse.*
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.android.UI
 
@@ -33,13 +34,30 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        SetProfile()
+        if (apiClient.isLoggedIn())
+            SetProfile()
+        else
+            login_text.setText("Niezarejestrowany")
+        //  setNavHeader()
+    }
+
+    fun setNavHeader() = launch(UI) {
+        if (apiClient.isLoggedIn()) {
+            val customer = apiClient.GetProfile().await()
+            customer_name_header.text = customer.firstName + customer.lastName
+        } else {
+            customer_name_header.text = "Niezarejestrowany użytkowniku"
+        }
     }
 
     private fun SetProfile() = launch(UI) {
         var customer = apiClient.GetProfile().await()
 
-        login_text.text.append(customer.login)
+        login_text.setText(customer.login)
+        email_text.setText(customer.email)
+        firstname_text.setText(customer.firstName)
+        lastname_text.setText(customer.lastName)
+        phone_text.setText(customer.phone)
     }
 
     override fun onBackPressed() {

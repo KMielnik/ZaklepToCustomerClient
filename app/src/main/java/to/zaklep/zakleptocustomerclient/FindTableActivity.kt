@@ -12,17 +12,30 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.TypedValue
 import android.view.*
 import android.view.animation.AnimationUtils
+import android.widget.AdapterView
+import android.widget.Toast
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.gson.responseObject
 import com.github.kittinunf.fuel.httpGet
+import com.takisoft.datetimepicker.DatePickerDialog
+import com.takisoft.datetimepicker.TimePickerDialog
 import kotlinx.android.synthetic.main.activity_find_table.*
 import kotlinx.android.synthetic.main.app_bar_find_table.*
 import kotlinx.android.synthetic.main.content_find_table.*
+import kotlinx.android.synthetic.main.nav_header_find_table.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 import to.zaklep.zakleptocustomerclient.Adapters.RestaurantsAdapter
 import to.zaklep.zakleptocustomerclient.Adapters.RestaurantsTablesAdapter
 import to.zaklep.zakleptocustomerclient.Models.Restaurant
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FindTableActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    val apiClient = APIClient()
+    private val RestaurantList: MutableList<Restaurant> = mutableListOf<Restaurant>()
+    private var filteredRestaurantList: MutableList<Restaurant> = mutableListOf<Restaurant>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,15 +55,13 @@ class FindTableActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         }
 
-        var filteredRestaurantList: MutableList<Restaurant> = mutableListOf<Restaurant>()
-
         var adapter = RestaurantsTablesAdapter(this, filteredRestaurantList)
 
         //Downloading restaurants from api
         "restaurants".httpGet()
                 .responseObject<List<Restaurant>> { request, response, result ->
                     result.get().forEach {
-
+                        RestaurantList.add(it)
                         filteredRestaurantList.add(it)
                     }
                     adapter.notifyDataSetChanged()
@@ -65,6 +76,55 @@ class FindTableActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         restaurants_list.adapter = adapter
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        cousine_filter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position == 0) {
+                    onNothingSelected(parent)
+                    return
+                }
+                filteredRestaurantList.clear()
+                RestaurantList.filter { x -> x.cuisine == parent?.getItemAtPosition(position).toString() }.forEach() {
+                    filteredRestaurantList.add(it)
+                }
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                filteredRestaurantList.clear()
+                RestaurantList.forEach() {
+                    filteredRestaurantList.add(it)
+                }
+                adapter.notifyDataSetChanged()
+            }
+        }
+
+        //setNavHeader()
+    }
+
+    fun onDatePickerClicked(view: View) {
+        val datePickerDialog = DatePickerDialog(this)
+        datePickerDialog.setOnDateSetListener { view, year, month, dayOfMonth ->
+            date_filter.setText(SimpleDateFormat("yyyy-MM-dd").format(Date(year - 1900, month, dayOfMonth)))
+        }
+        datePickerDialog.show()
+    }
+
+    fun onTimePickerClicked(view: View) {
+        val timePickerDialog = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+            time_filter.setText(hourOfDay.toString().padStart(2, '0') + ":" + minute.toString().padStart(2, '0'))
+        }, 15, 0, true)
+        timePickerDialog.show()
+
+    }
+
+    fun setNavHeader() = launch(UI) {
+        if (apiClient.isLoggedIn()) {
+            val customer = apiClient.GetProfile().await()
+            customer_name_header.text = customer.firstName + customer.lastName
+        } else {
+            customer_name_header.text = "Niezarejestrowany użytkowniku"
+        }
     }
 
     var isHiddenPanelShown: Boolean = true

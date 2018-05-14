@@ -121,7 +121,7 @@
     <string name="cousine">Cousine:</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_title">Welcome!</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="account">Account</string>
@@ -144,4 +144,10 @@
     <string name="account_details">Account details</string>
     <string name="change_password">Change password</string>
     <string name="update">Update</string>
+    <string name="date_reservation">Date:</string>
+    <string name="time_reservation">Time:</string>
+    <string name="create_reservation">Reserve your table</string>
+    <string name="number_of_seats">"Number of seats: "</string>
+    <string name="restaurant_name_title">Restaurant:</string>
+    <string name="touch_me">Touch me</string>
 </resources>

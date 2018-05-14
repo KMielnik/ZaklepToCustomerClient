@@ -1,5 +1,6 @@
 package to.zaklep.zakleptocustomerclient
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,18 +11,24 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.github.kittinunf.fuel.gson.responseObject
 import com.github.kittinunf.fuel.httpGet
 import kotlinx.android.synthetic.main.activity_restaurant_page.*
 import kotlinx.android.synthetic.main.app_bar_restaurant_page.*
 import kotlinx.android.synthetic.main.content_restaurant_page.*
+import kotlinx.android.synthetic.main.nav_header_browse.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 import to.zaklep.zakleptocustomerclient.Models.Restaurant
 
 class RestaurantPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
 
     var isOpenHoursLayoutOpen = false
+    val apiClient = APIClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +38,15 @@ class RestaurantPageActivity : AppCompatActivity(), NavigationView.OnNavigationI
 
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            var mailIntent = Intent(Intent.ACTION_SEND)
+            mailIntent.type = "message/rfc822"
+            mailIntent.putExtra(Intent.EXTRA_EMAIL, Array<String>(1) { "${intent.getStringExtra("ID")}@gmail.com" })
+            try {
+                startActivity(Intent.createChooser(mailIntent, "Wyslij mail...")
+                )
+            } catch (e: ActivityNotFoundException) {
+                Snackbar.make(layouttt, "Nie znaleziono klienta email", Snackbar.LENGTH_LONG).show()
+            }
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -61,13 +75,23 @@ class RestaurantPageActivity : AppCompatActivity(), NavigationView.OnNavigationI
                 isOpenHoursLayoutOpen = false
             }
         }
+        //setNavHeader()
+    }
+
+    fun setNavHeader() = launch(UI) {
+        if (apiClient.isLoggedIn()) {
+            val customer = apiClient.GetProfile().await()
+            customer_name_header.text = customer.firstName + customer.lastName
+        } else {
+            customer_name_header.text = "Niezarejestrowany użytkowniku"
+        }
     }
 
     fun setPage(restaurant: Restaurant) {
         toolbar_layout.title = restaurant.name
         restaurant_description.text = restaurant.description.replace("\r", "").replace("                    ", " ")
         restaurant_cousine_page.text = restaurant.cuisine
-        restaurant_adress.text = restaurant.localization
+        restaurant_adress.text = "Ul.Przykladowa 14 " + restaurant.localization
 
         Glide.with(this).load(restaurant.representativePhotoUrl).into(restaurant_photo)
 
@@ -125,5 +149,11 @@ class RestaurantPageActivity : AppCompatActivity(), NavigationView.OnNavigationI
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    fun OnBookButtonClicked(view: View) {
+        val newIntent = Intent(this, MakeReservationActivity::class.java)
+        newIntent.putExtra("ID", intent.getStringExtra("ID"))
+        startActivity(newIntent)
     }
 }

@@ -21,8 +21,11 @@ import com.github.kittinunf.fuel.httpGet
 import kotlinx.android.synthetic.main.activity_browse.*
 import kotlinx.android.synthetic.main.app_bar_browse.*
 import kotlinx.android.synthetic.main.content_browse.*
+import kotlinx.android.synthetic.main.nav_header_browse.*
+import kotlinx.coroutines.experimental.launch
 import to.zaklep.zakleptocustomerclient.Adapters.RestaurantsAdapter
 import to.zaklep.zakleptocustomerclient.Models.Restaurant
+import kotlinx.coroutines.experimental.android.UI
 
 class BrowseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -41,6 +44,7 @@ class BrowseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
+        // setNavHeader()
 
         FuelManager.instance.apply {
             basePath = "http://zakleptoapi.azurewebsites.net/api/"
@@ -59,6 +63,7 @@ class BrowseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                     adapter.notifyDataSetChanged()
                 }
         //
+
 
 
         var mLayoutManager = LinearLayoutManager(this)
@@ -98,6 +103,14 @@ class BrowseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             GoToMainActivity()
     }
 
+    fun setNavHeader() = launch(UI) {
+        if (apiClient.isLoggedIn()) {
+            val customer = apiClient.GetProfile().await()
+            customer_name_header.text = customer.firstName + customer.lastName
+        } else {
+            customer_name_header.text = "Niezarejestrowany użytkowniku"
+        }
+    }
 
     class GridSpacingItemDecoration(private val spanCount: Int, private val spacing: Int, private val includeEdge: Boolean) : RecyclerView.ItemDecoration() {
 

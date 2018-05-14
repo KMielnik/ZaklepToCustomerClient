@@ -11,6 +11,8 @@ import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.core.Response
 import com.github.kittinunf.fuel.gson.responseObject
+import com.github.kittinunf.fuel.httpGet
+import com.github.kittinunf.fuel.httpPost
 import com.google.gson.Gson
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.async
@@ -35,7 +37,7 @@ class APIClient {
 
     fun isLoggedIn(): Boolean {
 
-        return Token.isNotBlank()
+        return Token.isNotBlank() && Token != "Unregistered"
     }
 
     fun isUnregisteredUser(): Boolean {
@@ -116,6 +118,21 @@ class APIClient {
                 .body(reservation.id)
                 .response()
         return@async
+    }
+
+    fun MakeReservation(restaurantID: String, dateStart: String) = async(CommonPool) {
+        //Downloading restaurant
+        var restaurant: Restaurant = "restaurants/$restaurantID".httpGet()
+                .responseObject<Restaurant>().third.get()
+        var customer = GetProfile().await()
+        val reservation = OnCreateReservation(restaurant, dateStart, dateStart.replaceRange(12, 13, "${dateStart[13] + 1}"), Table("id", 10, Coordinates(10, 10)), customer, false, true)
+
+        // Fuel.post("reservations/register")
+        //      .body(gson.toJson(reservation))
+        //      .response()
+        //     .first
+        //.get()
+
     }
 
     val gson = Gson()

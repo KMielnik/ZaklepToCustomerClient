@@ -47,4 +47,11 @@
     <string name="update">Zaktualizuj</string>
     <string name="title_activity_profile">Profil użytkownika</string>
     <string name="title_activity_find_table">Znajdź stolik</string>
+    <string name="date_reservation">"Data: "</string>
+    <string name="time_reservation">"Godzina: "</string>
+    <string name="create_reservation">Dokonaj rezerwacji</string>
+    <string name="number_of_seats">"Ilość miejsc: "</string>
+    <string name="restaurant_name_title">"Restauracja: "</string>
+    <string name="nav_header_title">Witaj!</string>
+    <string name="touch_me">Dotknij mnie</string>
 </resources>

@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_reservations.*
 import kotlinx.android.synthetic.main.app_bar_reservations.*
 import kotlinx.android.synthetic.main.content_browse.*
 import kotlinx.android.synthetic.main.content_reservations.*
+import kotlinx.android.synthetic.main.nav_header_browse.*
 import kotlinx.coroutines.experimental.launch
 import to.zaklep.zakleptocustomerclient.Adapters.ReservationsAdapter
 import to.zaklep.zakleptocustomerclient.Models.Reservation
@@ -46,7 +47,18 @@ class ReservationsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         nav_view.setNavigationItemSelectedListener(this)
 
 
-        SetReservations()
+        if (apiClient.isLoggedIn())
+            SetReservations()
+        // setNavHeader()
+    }
+
+    fun setNavHeader() = launch(UI) {
+        if (apiClient.isLoggedIn()) {
+            val customer = apiClient.GetProfile().await()
+            customer_name_header.text = customer.firstName + customer.lastName
+        } else {
+            customer_name_header.text = "Niezarejestrowany użytkowniku"
+        }
     }
 
     fun SetReservations() = launch(UI) {

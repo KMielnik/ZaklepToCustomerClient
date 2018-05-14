@@ -29,6 +29,7 @@
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:fontFamily="@font/raleway_semibold"
         android:onClick="onCitySelectButtonClicked"
         android:text="@string/select"
         app:layout_constraintBottom_toBottomOf="parent"

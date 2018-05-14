@@ -9,6 +9,7 @@
     tools:showIn="@layout/app_bar_restaurant_page">
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/layouttt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -27,14 +28,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/book_button"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/raleway_semibold"
+            android:onClick="OnBookButtonClicked"
             android:text="@string/book"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider4" />
