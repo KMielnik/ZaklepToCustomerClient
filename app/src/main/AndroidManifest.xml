@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SignInActivity"
             android:label="@string/title_activity_sign_in" />
@@ -25,7 +25,8 @@
             android:label="@string/title_activity_city_selection" />
         <activity
             android:name=".BrowseActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:logo="@mipmap/ic_launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,7 +54,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".MakeReservationActivity"></activity>
+        <activity android:name=".MakeReservationActivity" />
     </application>
 
 </manifest>

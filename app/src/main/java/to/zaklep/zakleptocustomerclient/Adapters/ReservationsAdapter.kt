@@ -3,6 +3,8 @@ package to.zaklep.zakleptocustomerclient.Adapters
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.support.annotation.UiThread
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -31,9 +33,15 @@ class ReservationsAdapter(var mContext: Context, var reservationsList: MutableLi
         holder.restaurantName.text = reservation.restaurant.name
         Glide.with(mContext).load(reservation.restaurant.representativePhotoUrl).into(holder.restaurantPhoto)
 
-        holder.reservationConfirmed.isChecked = reservation.isConfirmed
+        if (reservation.isConfirmed) {
+            holder.reservationStatus.text = mContext.resources.getString(R.string.confirmed)
+            holder.reservationStatus.setTextColor(Color.GREEN)
+        } else {
+            holder.reservationStatus.text = mContext.resources.getString(R.string.nonconfirmed)
+            holder.reservationStatus.setTextColor(Color.RED)
+        }
         holder.reservationDate.text = reservation.dateStart.substringBefore('T')
-        holder.reservationHour.text = reservation.dateStart.substringAfter('T').substringBeforeLast(':') + "-" + reservation.dateEnd.substringAfter('T').substringBeforeLast(':')
+        holder.reservationHour.text = reservation.dateStart.substringAfter('T').substringBeforeLast(':')
         holder.cancelReservation.setOnClickListener {
             val builder = AlertDialog.Builder(mContext, android.R.style.Theme_Material_Light_Dialog_Alert)
             builder.setTitle("Delete reservation")
@@ -43,6 +51,7 @@ class ReservationsAdapter(var mContext: Context, var reservationsList: MutableLi
                         run {
                             reservationsList.remove(reservation)
                             notifyItemRemoved(position)
+                            notifyItemRangeChanged(position, itemCount)
                             DeleteReservation(reservation)
                             dialog.dismiss()
                         }
@@ -76,7 +85,7 @@ class ReservationsAdapter(var mContext: Context, var reservationsList: MutableLi
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var restaurantName: TextView = itemView.findViewById(R.id.restaurant_name)
         var restaurantPhoto: ImageView = itemView.findViewById(R.id.restaurant_photo)
-        var reservationConfirmed: CheckBox = itemView.findViewById(R.id.reservation_confirmed)
+        var reservationStatus: TextView = itemView.findViewById(R.id.reservation_status)
         var cancelReservation: Button = itemView.findViewById(R.id.cancel_reservation)
         var reservationDate: TextView = itemView.findViewById(R.id.reservation_date)
         var reservationHour: TextView = itemView.findViewById(R.id.reservation_hour)

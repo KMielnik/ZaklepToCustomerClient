@@ -9,16 +9,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.restaurant_tables_card.view.*
+import to.zaklep.zakleptocustomerclient.MakeReservationActivity
 import to.zaklep.zakleptocustomerclient.Models.Restaurant
 import to.zaklep.zakleptocustomerclient.R
 import to.zaklep.zakleptocustomerclient.RestaurantPageActivity
 
-class RestaurantsTablesAdapter(var mContext: Context, var restaurantList: List<Restaurant>) : RecyclerView.Adapter<RestaurantsTablesAdapter.MyViewHolder>() {
+class RestaurantsTablesAdapter(var mContext: Context, var restaurantList: List<Restaurant>, var datetime: List<String>) : RecyclerView.Adapter<RestaurantsTablesAdapter.MyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         var itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.restaurant_tables_card, parent, false)
         var holder = MyViewHolder(itemView)
@@ -48,9 +48,37 @@ class RestaurantsTablesAdapter(var mContext: Context, var restaurantList: List<R
         }
 
         holder.reservationHourAfterButton.setTextColor(Color.LTGRAY)
-        holder.reservationHourBeforeButton.text = "17:00"
-        holder.reservationActualButton.text = "18:00"
-        holder.reservationHourAfterButton.text = "19:00"
+
+        var hourBefore = (datetime[1].substringBefore(':').toInt() - 1).toString() + ":" + datetime[1].substringAfter(':')
+        var actualHour = datetime[1]
+        var hourAfter = (datetime[1].substringBefore(':').toInt() + 1).toString() + ":" + datetime[1].substringAfter(':')
+
+        holder.reservationHourBeforeButton.text = hourBefore
+        holder.reservationHourBeforeButton.setOnClickListener {
+            val intent = Intent(mContext, MakeReservationActivity::class.java)
+            intent.putExtra("ID", restaurant.id)
+            intent.putExtra("Time", hourBefore)
+            intent.putExtra("Date", datetime[0])
+            mContext.startActivity(intent)
+        }
+
+        holder.reservationActualButton.text = actualHour
+        holder.reservationActualButton.setOnClickListener {
+            val intent = Intent(mContext, MakeReservationActivity::class.java)
+            intent.putExtra("ID", restaurant.id)
+            intent.putExtra("Time", actualHour)
+            intent.putExtra("Date", datetime[0])
+            mContext.startActivity(intent)
+        }
+
+        holder.reservationHourAfterButton.text = hourAfter
+        holder.reservationHourAfterButton.setOnClickListener {
+            val intent = Intent(mContext, MakeReservationActivity::class.java)
+            intent.putExtra("ID", restaurant.id)
+            intent.putExtra("Time", hourAfter)
+            intent.putExtra("Date", datetime[0])
+            mContext.startActivity(intent)
+        }
     }
 
 

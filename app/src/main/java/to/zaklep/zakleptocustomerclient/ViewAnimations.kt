@@ -12,8 +12,8 @@ object ViewAnimations {
         val targetHeight = v.measuredHeight
 
         // Older versions of android (pre API 21) cancel animations for views with a height of 0.
-        v.layoutParams.height = 1
-        v.visibility = View.VISIBLE
+        v.layoutParams.height = 0
+
         val a = object : Animation() {
             override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
                 v.layoutParams.height = if (interpolatedTime == 1f)
@@ -31,6 +31,7 @@ object ViewAnimations {
         // 1dp/ms
         a.duration = (targetHeight / v.context.resources.displayMetrics.density).toInt().toLong()
         v.startAnimation(a)
+        v.visibility = View.VISIBLE
     }
 
     fun collapse(v: View) {

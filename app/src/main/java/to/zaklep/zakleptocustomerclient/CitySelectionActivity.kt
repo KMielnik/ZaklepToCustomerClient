@@ -18,7 +18,7 @@ class CitySelectionActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (apiClient.isLoggedIn())
+        if (apiClient.isLoggedIn() || apiClient.isUnregisteredUser())
             GoToBrowseActivity()
     }
 

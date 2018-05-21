@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import com.github.kittinunf.fuel.gson.responseObject
 import com.github.kittinunf.fuel.httpGet
@@ -17,7 +18,6 @@ import java.sql.Time
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlinx.coroutines.experimental.android.UI
-import org.jetbrains.anko.timePicker
 
 
 class MakeReservationActivity : AppCompatActivity() {
@@ -26,6 +26,7 @@ class MakeReservationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         setContentView(R.layout.activity_make_reservation)
 
         var restaurant: Restaurant
@@ -35,19 +36,32 @@ class MakeReservationActivity : AppCompatActivity() {
                     restaurant_name.text = result.get().name
                 }
 
+        val calendar = Calendar.getInstance()
+        val dateFormatter = SimpleDateFormat("yyyy / MM / dd ")
+        reservation_date.text = dateFormatter.format(calendar.time)
+
+        val timeFormatter = SimpleDateFormat("HH:mm")
+        reservation_time.text = timeFormatter.format(calendar.time)
+
+
+        if (intent.getStringExtra("Time") != null)
+            reservation_time.text = intent.getStringExtra("Time")
+        if (intent.getStringExtra("Date") != null)
+            reservation_date.text = intent.getStringExtra("Date")
+
     }
 
     fun onDatePickerClicked(view: View) {
         val datePickerDialog = DatePickerDialog(this)
         datePickerDialog.setOnDateSetListener { view, year, month, dayOfMonth ->
-            reservation_date.setText(SimpleDateFormat("yyyy-MM-dd").format(Date(year - 1900, month, dayOfMonth)))
+            reservation_date.text = SimpleDateFormat("yyyy/MM/dd ").format(Date(year - 1900, month, dayOfMonth))
         }
         datePickerDialog.show()
     }
 
     fun onTimePickerClicked(view: View) {
         val timePickerDialog = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-            reservation_time.setText(hourOfDay.toString().padStart(2, '0') + ":" + minute.toString().padStart(2, '0'))
+            reservation_time.text = hourOfDay.toString().padStart(2, '0') + ":" + minute.toString().padStart(2, '0')
         }, 15, 0, true)
         timePickerDialog.show()
 
@@ -55,8 +69,7 @@ class MakeReservationActivity : AppCompatActivity() {
 
     fun onBookClicked(view: View) = launch(UI) {
         var dateStart = reservation_date.text.toString() + "T" + reservation_time.text
-        //apiClient.MakeReservation(intent.getStringExtra("ID"),dateStart).await()
-
-        Toast.makeText(this@MakeReservationActivity, "Zarezerwowano stolik.", Toast.LENGTH_LONG).show()
+        apiClient.MakeReservation(intent.getStringExtra("ID"), dateStart).await()
+        Toast.makeText(this@MakeReservationActivity, "XD", Toast.LENGTH_LONG).show()
     }
 }

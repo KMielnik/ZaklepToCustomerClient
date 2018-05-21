@@ -125,13 +125,17 @@ class APIClient {
         var restaurant: Restaurant = "restaurants/$restaurantID".httpGet()
                 .responseObject<Restaurant>().third.get()
         var customer = GetProfile().await()
-        val reservation = OnCreateReservation(restaurant, dateStart, dateStart.replaceRange(12, 13, "${dateStart[13] + 1}"), Table("id", 10, Coordinates(10, 10)), customer, false, true)
+        val dateStartNew = dateStart.replace(" ", "").replace("/", "-") + ":00"
+        val dateEnd = dateStartNew
+        val numberOfSeatsInt = 5
+        val reservation = OnCreateReservation(restaurant, dateStartNew, dateEnd, Table("id", numberOfSeatsInt, Coordinates(10, 10)), customer, false, true)
 
-        // Fuel.post("reservations/register")
-        //      .body(gson.toJson(reservation))
-        //      .response()
-        //     .first
-        //.get()
+        val json = gson.toJson(reservation)
+        Fuel.post("reservations/register")
+                .body(json)
+                .response()
+                .third
+                .get()
 
     }
 

@@ -23,12 +23,13 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (apiClient.isLoggedIn())
-            GoToBrowseActivity()
+        if (apiClient.isLoggedIn() || apiClient.isUnregisteredUser()) {
+            GoToCitySelection()
+        }
     }
 
     fun onSignupButtonClicked(view: View) = launch(UI) {
-        if (password.text != password_confirm.text) {
+        if (password.text.toString() != password_confirm.text.toString()) {
             password_confirm.error = "Hasła muszą sie zgadzać"
         } else if (password.length() < 3) {
             password.error = "Hasło musi mieć minimum 3 znaki"
@@ -40,10 +41,8 @@ class SignUpActivity : AppCompatActivity() {
                     login.text.toString(),
                     email.text.toString(),
                     password.text.toString()).await()
-            GoToCitySelection()
         }
-
-
+        GoToBrowseActivity()
     }
 
     private fun GoToBrowseActivity() {

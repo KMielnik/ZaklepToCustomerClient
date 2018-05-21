@@ -49,13 +49,13 @@ class ReservationsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
         if (apiClient.isLoggedIn())
             SetReservations()
-        // setNavHeader()
+        setNavHeader()
     }
 
     fun setNavHeader() = launch(UI) {
         if (apiClient.isLoggedIn()) {
             val customer = apiClient.GetProfile().await()
-            customer_name_header.text = customer.firstName + customer.lastName
+            customer_name_header.text = customer.firstName + " " + customer.lastName
         } else {
             customer_name_header.text = "Niezarejestrowany użytkowniku"
         }
@@ -116,7 +116,12 @@ class ReservationsActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
-            R.id.action_settings -> return true
+            R.id.action_logout -> {
+                apiClient.LogOff()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }

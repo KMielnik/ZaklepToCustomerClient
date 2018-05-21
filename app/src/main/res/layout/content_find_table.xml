@@ -22,10 +22,11 @@
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:minHeight="0dp">
 
                 <TextView
+                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -37,19 +38,41 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/date_filter"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:ems="10"
-                    android:inputType="date"
-                    android:onClick="onDatePickerClicked"
-                    android:text="@string/touch_me"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+                    android:layout_height="0dp"
+                    android:gravity="right|center"
+                    android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/date_filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="date"
+                        android:onClick="onDatePickerClicked"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        style="@style/Widget.AppCompat.ImageButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackground"
+                        android:elevation="4dp"
+                        android:onClick="onDatePickerClicked"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/ic_calendar_white_32dp" />
+                </LinearLayout>
 
             </android.support.constraint.ConstraintLayout>
 
@@ -70,19 +93,41 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/time_filter"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:ems="10"
-                    android:inputType="time"
-                    android:onClick="onTimePickerClicked"
-                    android:text="@string/touch_me"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+                    android:layout_height="0dp"
+                    android:gravity="right|center"
+                    android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/time_filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="time"
+                        android:onClick="onTimePickerClicked"
+                        android:textAlignment="viewEnd"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        style="@style/Widget.AppCompat.ImageButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackground"
+                        android:elevation="4dp"
+                        android:onClick="onTimePickerClicked"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/ic_calendar_white_32dp" />
+                </LinearLayout>
 
             </android.support.constraint.ConstraintLayout>
 
@@ -110,6 +155,7 @@
                     android:layout_marginEnd="8dp"
                     android:ems="10"
                     android:inputType="number"
+                    android:textAlignment="viewEnd"
                     android:textColor="@android:color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

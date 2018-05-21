@@ -26,6 +26,8 @@ import kotlinx.coroutines.experimental.launch
 import to.zaklep.zakleptocustomerclient.Adapters.RestaurantsAdapter
 import to.zaklep.zakleptocustomerclient.Models.Restaurant
 import kotlinx.coroutines.experimental.android.UI
+import to.zaklep.zakleptocustomerclient.R.id.drawer_layout
+import to.zaklep.zakleptocustomerclient.R.id.hidden_panel
 
 class BrowseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -95,6 +97,7 @@ class BrowseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 adapter.notifyDataSetChanged()
             }
         }
+        setNavHeader()
     }
 
     override fun onResume() {
@@ -106,7 +109,7 @@ class BrowseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     fun setNavHeader() = launch(UI) {
         if (apiClient.isLoggedIn()) {
             val customer = apiClient.GetProfile().await()
-            customer_name_header.text = customer.firstName + customer.lastName
+            customer_name_header.text = customer.firstName + " " + customer.lastName
         } else {
             customer_name_header.text = "Niezarejestrowany użytkowniku"
         }
@@ -181,7 +184,12 @@ class BrowseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
-            R.id.action_settings -> return true
+            R.id.action_logout -> {
+                apiClient.LogOff()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }

@@ -8,5 +8,5 @@ data class Restaurant(
         @SerializedName("cuisine") val cuisine: String,
         @SerializedName("localization") val localization: String,
         @SerializedName("representativePhotoUrl") val representativePhotoUrl: String,
-        @SerializedName("tables") val tables: List<Any>
+        @SerializedName("tables") val tables: List<Table>
 )

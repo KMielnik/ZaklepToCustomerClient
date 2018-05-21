@@ -17,8 +17,8 @@
             android:id="@+id/restaurant_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="TextView"
             android:textAlignment="viewStart"
@@ -43,19 +43,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/restaurant_cousine" />
-
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
@@ -67,7 +54,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/restaurant_description" />
+            app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
         <TextView
             android:id="@+id/restaurant_cousine_page"
@@ -79,7 +66,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/restaurant_description" />
+            app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
         <LinearLayout
             android:id="@+id/restaurant_open_hours_layout"
@@ -98,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:text="@string/opening_hours"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -136,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
                 android:layout_weight="0.3"
-                android:background="@android:color/background_light"
+                android:background="?android:attr/selectableItemBackground"
                 app:layout_constraintBottom_toTopOf="@+id/divider3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/restaurant_cousine_page"
@@ -198,6 +185,18 @@
             app:layout_constraintStart_toEndOf="@+id/restaurant_adress"
             app:layout_constraintTop_toBottomOf="@+id/divider3"
             app:srcCompat="@drawable/google_maps" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/restaurant_description" />
 
     </android.support.constraint.ConstraintLayout>
 

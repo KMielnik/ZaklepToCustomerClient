@@ -2,7 +2,6 @@ package to.zaklep.zakleptocustomerclient
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -13,7 +12,6 @@ import android.util.TypedValue
 import android.view.*
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
-import android.widget.Toast
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.gson.responseObject
 import com.github.kittinunf.fuel.httpGet
@@ -25,7 +23,6 @@ import kotlinx.android.synthetic.main.content_find_table.*
 import kotlinx.android.synthetic.main.nav_header_find_table.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
-import to.zaklep.zakleptocustomerclient.Adapters.RestaurantsAdapter
 import to.zaklep.zakleptocustomerclient.Adapters.RestaurantsTablesAdapter
 import to.zaklep.zakleptocustomerclient.Models.Restaurant
 import java.text.SimpleDateFormat
@@ -36,6 +33,9 @@ class FindTableActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     val apiClient = APIClient()
     private val RestaurantList: MutableList<Restaurant> = mutableListOf<Restaurant>()
     private var filteredRestaurantList: MutableList<Restaurant> = mutableListOf<Restaurant>()
+    var filteredDatetime = mutableListOf<String>("2018/05/18", "15:00")
+
+    var adapter: RestaurantsTablesAdapter = RestaurantsTablesAdapter(this, filteredRestaurantList, filteredDatetime)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,8 +54,6 @@ class FindTableActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             basePath = "http://zakleptoapi.azurewebsites.net/api/"
 
         }
-
-        var adapter = RestaurantsTablesAdapter(this, filteredRestaurantList)
 
         //Downloading restaurants from api
         "restaurants".httpGet()
@@ -84,7 +82,7 @@ class FindTableActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     return
                 }
                 filteredRestaurantList.clear()
-                RestaurantList.filter { x -> x.cuisine == parent?.getItemAtPosition(position).toString() }.forEach() {
+                RestaurantList.filter { x -> x.cuisine == parent?.getItemAtPosition(position).toString() }.forEach {
                     filteredRestaurantList.add(it)
                 }
                 adapter.notifyDataSetChanged()
@@ -92,27 +90,47 @@ class FindTableActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 filteredRestaurantList.clear()
-                RestaurantList.forEach() {
+                RestaurantList.forEach {
                     filteredRestaurantList.add(it)
                 }
                 adapter.notifyDataSetChanged()
             }
         }
 
-        //setNavHeader()
+        setNavHeader()
+    }
+
+    override fun onResume() {
+        val calendar = Calendar.getInstance()
+        val dateFormatter = SimpleDateFormat("yyyy/MM/dd ")
+        date_filter.text = dateFormatter.format(calendar.time)
+        filteredDatetime[0] = dateFormatter.format(calendar.time)
+
+        val timeFormatter = SimpleDateFormat("HH:mm")
+        time_filter.text = timeFormatter.format(calendar.time)
+
+        filteredDatetime[1] = timeFormatter.format(calendar.time).substringBefore(':') + ":00"
+        adapter.notifyDataSetChanged()
+
+        super.onResume()
     }
 
     fun onDatePickerClicked(view: View) {
         val datePickerDialog = DatePickerDialog(this)
         datePickerDialog.setOnDateSetListener { view, year, month, dayOfMonth ->
-            date_filter.setText(SimpleDateFormat("yyyy-MM-dd").format(Date(year - 1900, month, dayOfMonth)))
+
+            date_filter.text = SimpleDateFormat("yyyy/MM/dd ").format(Date(year - 1900, month, dayOfMonth))
+            filteredDatetime[0] = SimpleDateFormat("yyyy/MM/dd ").format(Date(year - 1900, month, dayOfMonth))
+            adapter.notifyDataSetChanged()
         }
         datePickerDialog.show()
     }
 
     fun onTimePickerClicked(view: View) {
         val timePickerDialog = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-            time_filter.setText(hourOfDay.toString().padStart(2, '0') + ":" + minute.toString().padStart(2, '0'))
+            time_filter.text = hourOfDay.toString().padStart(2, '0') + ":" + minute.toString().padStart(2, '0')
+            filteredDatetime[1] = hourOfDay.toString().padStart(2, '0') + ":00"
+            adapter.notifyDataSetChanged()
         }, 15, 0, true)
         timePickerDialog.show()
 
@@ -121,7 +139,7 @@ class FindTableActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     fun setNavHeader() = launch(UI) {
         if (apiClient.isLoggedIn()) {
             val customer = apiClient.GetProfile().await()
-            customer_name_header.text = customer.firstName + customer.lastName
+            customer_name_header.text = customer.firstName + " " + customer.lastName
         } else {
             customer_name_header.text = "Niezarejestrowany użytkowniku"
         }
@@ -172,7 +190,12 @@ class FindTableActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
-            R.id.action_settings -> return true
+            R.id.action_logout -> {
+                apiClient.LogOff()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }

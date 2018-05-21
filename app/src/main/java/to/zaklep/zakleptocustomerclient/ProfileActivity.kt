@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.app_bar_profile.*
@@ -24,6 +25,8 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+
         setContentView(R.layout.activity_profile)
         setSupportActionBar(toolbar)
 
@@ -38,13 +41,13 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             SetProfile()
         else
             login_text.setText("Niezarejestrowany")
-        //  setNavHeader()
+        setNavHeader()
     }
 
     fun setNavHeader() = launch(UI) {
         if (apiClient.isLoggedIn()) {
             val customer = apiClient.GetProfile().await()
-            customer_name_header.text = customer.firstName + customer.lastName
+            customer_name_header.text = customer.firstName + " " + customer.lastName
         } else {
             customer_name_header.text = "Niezarejestrowany użytkowniku"
         }
@@ -79,7 +82,12 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
-            R.id.action_settings -> return true
+            R.id.action_logout -> {
+                apiClient.LogOff()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
     }

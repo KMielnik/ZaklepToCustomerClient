@@ -7,7 +7,7 @@
     <string name="are_you_actually_user">Jesteś już naszym użytkownikiem?</string>
     <string name="prompt_email">E-mail</string>
     <string name="prompt_password">Hasło</string>
-    <string name="action_sign_in">Zaloguj się</string>
+    <string name="action_sign_ina">Zaloguj się</string>
     <string name="action_sign_in_short">Zaloguj się</string>
     <string name="error_invalid_email">Nieprawidłowy email</string>
     <string name="error_invalid_password">Hasło jest zbyt krótkie</string>
@@ -25,7 +25,7 @@
     <string name="title_activity_city_selection">Wybierz swoje miasto</string>
     <string name="select">Wybierz</string>
     <string name="title_activity_browse">Przeglądaj restauracje</string>
-    <string name="action_settings">Ustawienia</string>
+    <string name="action_logout">Wyloguj się</string>
     <string name="cousine">Kuchnia:</string>
     <string name="your_reservations">Twoje rezerwacje</string>
     <string name="browse_restaurants">Przeglądaj restauracje</string>
@@ -39,7 +39,7 @@
     <string name="title_activity_reservations">Twoje rezerwacje</string>
     <string name="cancel">Usuń</string>
     <string name="cancel_reservation">Odwołaj</string>
-    <string name="confirmed">Potwierdzona?</string>
+    <string name="reservation_status">"Status rezerwacji: "</string>
     <string name="date">Data:</string>
     <string name="time">Godzina:</string>
     <string name="account_details">Szczegóły konta</string>
@@ -54,4 +54,6 @@
     <string name="restaurant_name_title">"Restauracja: "</string>
     <string name="nav_header_title">Witaj!</string>
     <string name="touch_me">Dotknij mnie</string>
+    <string name="confirmed">Potwierdzona</string>
+    <string name="nonconfirmed">Niepotwierdzona</string>
 </resources>
