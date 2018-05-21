@@ -26,8 +26,6 @@ import kotlinx.coroutines.experimental.launch
 import to.zaklep.zakleptocustomerclient.Adapters.RestaurantsAdapter
 import to.zaklep.zakleptocustomerclient.Models.Restaurant
 import kotlinx.coroutines.experimental.android.UI
-import to.zaklep.zakleptocustomerclient.R.id.drawer_layout
-import to.zaklep.zakleptocustomerclient.R.id.hidden_panel
 
 class BrowseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -97,7 +95,8 @@ class BrowseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 adapter.notifyDataSetChanged()
             }
         }
-        setNavHeader()
+        if (apiClient.isLoggedIn() || apiClient.isUnregisteredUser())
+            setNavHeader()
     }
 
     override fun onResume() {
