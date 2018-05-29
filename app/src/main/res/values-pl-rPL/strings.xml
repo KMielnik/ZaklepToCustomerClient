@@ -26,7 +26,7 @@
     <string name="select">Wybierz</string>
     <string name="title_activity_browse">Przeglądaj restauracje</string>
     <string name="action_logout">Wyloguj się</string>
-    <string name="cousine">Kuchnia:</string>
+    <string name="cousine">"Kuchnia: "</string>
     <string name="your_reservations">Twoje rezerwacje</string>
     <string name="browse_restaurants">Przeglądaj restauracje</string>
     <string name="account">Profil</string>
@@ -34,14 +34,14 @@
     <string name="description">Opis</string>
     <string name="book">Zarezerwuj</string>
     <string name="week_days">Poniedziałek\nWtorek\nŚroda\nCzwartek\nPiatek\nSobota\nNiedziela</string>
-    <string name="opening_hours">Godziny otwarcia:</string>
+    <string name="opening_hours">"Godziny otwarcia: "</string>
     <string name="title_activity_restaurant_page">Wybrana restauracja</string>
     <string name="title_activity_reservations">Twoje rezerwacje</string>
     <string name="cancel">Usuń</string>
     <string name="cancel_reservation">Odwołaj</string>
-    <string name="reservation_status">"Status rezerwacji: "</string>
-    <string name="date">Data:</string>
-    <string name="time">Godzina:</string>
+    <string name="reservation_status">"Status rezerwacji:  "</string>
+    <string name="date">"Data: "</string>
+    <string name="time">"Godzina: "</string>
     <string name="account_details">Szczegóły konta</string>
     <string name="change_password">Zmień hasło</string>
     <string name="update">Zaktualizuj</string>
@@ -50,7 +50,7 @@
     <string name="date_reservation">"Data: "</string>
     <string name="time_reservation">"Godzina: "</string>
     <string name="create_reservation">Dokonaj rezerwacji</string>
-    <string name="number_of_seats">"Ilość miejsc: "</string>
+    <string name="number_of_seats">"Ilość miejsc:  "</string>
     <string name="restaurant_name_title">"Restauracja: "</string>
     <string name="nav_header_title">Witaj!</string>
     <string name="touch_me">Dotknij mnie</string>

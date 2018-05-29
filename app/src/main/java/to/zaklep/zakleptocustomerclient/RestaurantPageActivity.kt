@@ -8,11 +8,14 @@ import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
+import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.Glide
 import com.github.kittinunf.fuel.gson.responseObject
 import com.github.kittinunf.fuel.httpGet
@@ -76,6 +79,12 @@ class RestaurantPageActivity : AppCompatActivity(), NavigationView.OnNavigationI
             }
         }
         setNavHeader()
+    }
+
+    fun onMEnuButtonClicked(view: View) {
+        MaterialDialog.Builder(this)
+                .customView(R.layout.menu_layout, true)
+                .show()
     }
 
     fun setNavHeader() = launch(UI) {

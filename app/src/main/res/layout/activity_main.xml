@@ -55,6 +55,7 @@
         android:drawableStart="@drawable/google_logo"
         android:elevation="8dp"
         android:fontFamily="@font/raleway_semibold"
+        android:onClick="onGoogleSignInButtonClicked"
         android:text="Google"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/signUpButton"

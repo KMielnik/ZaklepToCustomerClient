@@ -59,6 +59,7 @@ class RestaurantsTablesAdapter(var mContext: Context, var restaurantList: List<R
             intent.putExtra("ID", restaurant.id)
             intent.putExtra("Time", hourBefore)
             intent.putExtra("Date", datetime[0])
+            intent.putExtra("Seats", datetime[2])
             mContext.startActivity(intent)
         }
 
@@ -68,6 +69,7 @@ class RestaurantsTablesAdapter(var mContext: Context, var restaurantList: List<R
             intent.putExtra("ID", restaurant.id)
             intent.putExtra("Time", actualHour)
             intent.putExtra("Date", datetime[0])
+            intent.putExtra("Seats", datetime[2])
             mContext.startActivity(intent)
         }
 
@@ -77,6 +79,7 @@ class RestaurantsTablesAdapter(var mContext: Context, var restaurantList: List<R
             intent.putExtra("ID", restaurant.id)
             intent.putExtra("Time", hourAfter)
             intent.putExtra("Date", datetime[0])
+            intent.putExtra("Seats", datetime[2])
             mContext.startActivity(intent)
         }
     }

@@ -126,7 +126,7 @@
                         android:elevation="4dp"
                         android:onClick="onTimePickerClicked"
                         android:scaleType="centerInside"
-                        app:srcCompat="@drawable/ic_calendar_white_32dp" />
+                        app:srcCompat="@drawable/ic_time_white_24dp" />
                 </LinearLayout>
 
             </android.support.constraint.ConstraintLayout>

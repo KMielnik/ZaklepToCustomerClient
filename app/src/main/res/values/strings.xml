@@ -10,7 +10,7 @@
     <!-- Strings related to login -->
     <string name="prompt_login">Login</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_ina">Sign in or register</string>
+    <string name="action_sign_ina">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
@@ -118,7 +118,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_logout">Logout</string>
-    <string name="cousine">Cousine:</string>
+    <string name="cousine">"Cousine: "</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Welcome!</string>
@@ -132,23 +132,23 @@
     <string name="title_activity_restaurant_page">RestaurantPageActivity</string>
     <string name="book">Book</string>
     <string name="week_days">Monday\nTuesday\nWednesday\nThursday\nFriday\nSaturday\nSunday</string>
-    <string name="opening_hours">Opening hours:</string>
+    <string name="opening_hours">"Opening hours: "</string>
     <string name="title_activity_reservations">Your reservations</string>
     <string name="cancel">Cancel</string>
     <string name="cancel_reservation">Cancel</string>
     <string name="reservation_status">"Reservation status: "</string>
-    <string name="date">Date:</string>
-    <string name="time">Time:</string>
+    <string name="date">"Date: "</string>
+    <string name="time">"Time: "</string>
     <string name="title_activity_find_table">Find your table</string>
     <string name="title_activity_profile">User profile</string>
     <string name="account_details">Account details</string>
     <string name="change_password">Change password</string>
     <string name="update">Update</string>
-    <string name="date_reservation">Date:</string>
-    <string name="time_reservation">Time:</string>
+    <string name="date_reservation">"Date: "</string>
+    <string name="time_reservation">"Time: "</string>
     <string name="create_reservation">Reserve your table</string>
-    <string name="number_of_seats">"Number of seats: "</string>
-    <string name="restaurant_name_title">Restaurant:</string>
+    <string name="number_of_seats">"Number of seats:  "</string>
+    <string name="restaurant_name_title">"Restaurant: "</string>
     <string name="touch_me">Touch me</string>
     <string name="confirmed">Confirmed</string>
     <string name="nonconfirmed">Nonconfirmed</string>

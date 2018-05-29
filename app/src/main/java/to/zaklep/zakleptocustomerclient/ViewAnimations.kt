@@ -1,5 +1,6 @@
 package to.zaklep.zakleptocustomerclient
 
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
@@ -16,8 +17,9 @@ object ViewAnimations {
 
         val a = object : Animation() {
             override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
-                v.layoutParams.height = if (interpolatedTime == 1f)
-                    ViewGroup.LayoutParams.WRAP_CONTENT
+                v.layoutParams.height =
+                        if (interpolatedTime == 1f)
+                            ViewGroup.LayoutParams.WRAP_CONTENT
                 else
                     (targetHeight * interpolatedTime).toInt()
                 v.requestLayout()

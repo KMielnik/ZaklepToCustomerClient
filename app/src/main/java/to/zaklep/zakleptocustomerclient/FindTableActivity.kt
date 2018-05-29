@@ -1,15 +1,23 @@
 package to.zaklep.zakleptocustomerclient
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.transition.TransitionSet
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
+import android.text.TextWatcher
+import android.transition.ChangeBounds
+import android.transition.TransitionManager
 import android.util.TypedValue
 import android.view.*
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import com.github.kittinunf.fuel.core.FuelManager
@@ -23,6 +31,7 @@ import kotlinx.android.synthetic.main.content_find_table.*
 import kotlinx.android.synthetic.main.nav_header_find_table.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
+import org.jetbrains.anko.toast
 import to.zaklep.zakleptocustomerclient.Adapters.RestaurantsTablesAdapter
 import to.zaklep.zakleptocustomerclient.Models.Restaurant
 import java.text.SimpleDateFormat
@@ -33,7 +42,7 @@ class FindTableActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     val apiClient = APIClient()
     private val RestaurantList: MutableList<Restaurant> = mutableListOf<Restaurant>()
     private var filteredRestaurantList: MutableList<Restaurant> = mutableListOf<Restaurant>()
-    var filteredDatetime = mutableListOf<String>("2018/05/18", "15:00")
+    var filteredDatetime = mutableListOf<String>("2018/05/18", "15:00", "2")
 
     var adapter: RestaurantsTablesAdapter = RestaurantsTablesAdapter(this, filteredRestaurantList, filteredDatetime)
 
@@ -42,6 +51,18 @@ class FindTableActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         setContentView(R.layout.activity_find_table)
         setSupportActionBar(toolbar)
 
+        seats_filter.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                filteredDatetime[2] = seats_filter.text.toString()
+            }
+
+        })
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)

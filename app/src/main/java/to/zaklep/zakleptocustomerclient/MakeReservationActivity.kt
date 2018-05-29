@@ -48,7 +48,8 @@ class MakeReservationActivity : AppCompatActivity() {
             reservation_time.text = intent.getStringExtra("Time")
         if (intent.getStringExtra("Date") != null)
             reservation_date.text = intent.getStringExtra("Date")
-
+        if (intent.getStringExtra("Seats") != null)
+            number_of_seats.setText(intent.getStringExtra("Seats"))
     }
 
     fun onDatePickerClicked(view: View) {
@@ -70,6 +71,6 @@ class MakeReservationActivity : AppCompatActivity() {
     fun onBookClicked(view: View) = launch(UI) {
         var dateStart = reservation_date.text.toString() + "T" + reservation_time.text
         apiClient.MakeReservation(intent.getStringExtra("ID"), dateStart).await()
-        Toast.makeText(this@MakeReservationActivity, "XD", Toast.LENGTH_LONG).show()
+        Snackbar.make(reservation_layout, "Pomyślnie dokonano rezerwacji", Snackbar.LENGTH_LONG).show()
     }
 }
