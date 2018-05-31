@@ -1,5 +1,6 @@
 package to.zaklep.zakleptocustomerclient
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -11,6 +12,7 @@ import com.github.kittinunf.fuel.httpGet
 import com.takisoft.datetimepicker.DatePickerDialog
 import com.takisoft.datetimepicker.TimePickerDialog
 import kotlinx.android.synthetic.main.activity_make_reservation.*
+import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
 import to.zaklep.zakleptocustomerclient.Models.OnCreateReservation
 import to.zaklep.zakleptocustomerclient.Models.Restaurant
@@ -18,6 +20,8 @@ import java.sql.Time
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import kotlin.concurrent.thread
 
 
 class MakeReservationActivity : AppCompatActivity() {
@@ -73,4 +77,5 @@ class MakeReservationActivity : AppCompatActivity() {
         apiClient.MakeReservation(intent.getStringExtra("ID"), dateStart).await()
         Snackbar.make(reservation_layout, "Pomyślnie dokonano rezerwacji", Snackbar.LENGTH_LONG).show()
     }
+
 }

@@ -4,6 +4,8 @@ package to.zaklep.zakleptocustomerclient.Adapters
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -41,15 +43,44 @@ class RestaurantsTablesAdapter(var mContext: Context, var restaurantList: List<R
 
         Glide.with(mContext).load(restaurant.representativePhotoUrl).into(holder.restaurantPhoto)
 
-        holder.restaurantPageButton.setOnClickListener {
-            val intent = Intent(mContext, RestaurantPageActivity::class.java)
-            intent.putExtra("ID", restaurantList[position].id)
-            mContext.startActivity(intent)
+        var hourbeforecheck = (datetime[1].substringBefore(':').toInt() - 1)
+        if (hourbeforecheck < 0)
+            hourbeforecheck = 23
+
+        if (restaurant.name == "Zamkowa") {
+            holder.restaurantPageButton.setOnClickListener {
+                val intent = Intent(mContext, RestaurantPageActivity::class.java)
+                intent.putExtra("ID", restaurantList[position].id)
+                mContext.startActivity(intent)
+            }
+            when (hourbeforecheck % 3) {
+                0 -> {
+                    holder.reservationHourBeforeButton.isEnabled = false
+                    holder.reservationActualButton.isEnabled = true
+                    holder.reservationHourAfterButton.isEnabled = true
+                }
+                2 -> {
+                    holder.reservationHourBeforeButton.isEnabled = true
+                    holder.reservationActualButton.isEnabled = false
+                    holder.reservationHourAfterButton.isEnabled = true
+                }
+                1 -> {
+                    holder.reservationHourBeforeButton.isEnabled = true
+                    holder.reservationActualButton.isEnabled = true
+                    holder.reservationHourAfterButton.isEnabled = false
+                }
+            }
+        } else {
+            holder.mCardView.setCardBackgroundColor(Color.rgb(200, 200, 200))
+            holder.restaurantPhoto.setColorFilter(Color.rgb(178, 178, 178), PorterDuff.Mode.DARKEN)
+            holder.reservationActualButton.isEnabled = false
+            holder.reservationHourAfterButton.isEnabled = false
+            holder.reservationHourBeforeButton.isEnabled = false
+            holder.restaurantPageButton.isEnabled = false
         }
 
-        holder.reservationHourAfterButton.setTextColor(Color.LTGRAY)
 
-        var hourBefore = (datetime[1].substringBefore(':').toInt() - 1).toString() + ":" + datetime[1].substringAfter(':')
+        var hourBefore = hourbeforecheck.toString() + ":" + datetime[1].substringAfter(':')
         var actualHour = datetime[1]
         var hourAfter = (datetime[1].substringBefore(':').toInt() + 1).toString() + ":" + datetime[1].substringAfter(':')
 
@@ -82,6 +113,8 @@ class RestaurantsTablesAdapter(var mContext: Context, var restaurantList: List<R
             intent.putExtra("Seats", datetime[2])
             mContext.startActivity(intent)
         }
+
+
     }
 
 
@@ -93,5 +126,6 @@ class RestaurantsTablesAdapter(var mContext: Context, var restaurantList: List<R
         var reservationHourBeforeButton: Button = itemView.hour_before_button
         var reservationActualButton: Button = itemView.hour_actual_button
         var reservationHourAfterButton: Button = itemView.hour_after_button
+        var mCardView: CardView = itemView.restaurant_tables_cardview
     }
 }

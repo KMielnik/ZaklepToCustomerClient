@@ -97,6 +97,8 @@ class BrowseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
         if (apiClient.isLoggedIn() || apiClient.isUnregisteredUser())
             setNavHeader()
+
+        cousine_filter.isEnabled = false
     }
 
     override fun onResume() {

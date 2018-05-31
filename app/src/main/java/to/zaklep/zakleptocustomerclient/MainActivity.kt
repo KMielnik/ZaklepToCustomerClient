@@ -25,6 +25,11 @@ class MainActivity : AppCompatActivity() {
         var facebookLogo = resources.getDrawable(R.drawable.facebook_logo)
         facebookLogo.setBounds(20, 0, 100, 80)
         facebookLoginButton.setCompoundDrawables(facebookLogo, null, null, null)
+
+        facebookLoginButton.isEnabled = false
+        googleLoginButton.isEnabled = false
+        signUpButton.isEnabled = false
+        continueAsGuestButton.isEnabled = false
     }
 
     override fun onResume() {
