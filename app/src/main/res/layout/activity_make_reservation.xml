@@ -55,16 +55,16 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/reservation_time"
         app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/reservation_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="TextView"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton2"
-            app:layout_constraintTop_toTopOf="@+id/imageButton2" />
+    <TextView
+        android:id="@+id/reservation_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton2"
+        app:layout_constraintTop_toTopOf="@+id/imageButton2" />
 
     <ImageButton
         android:id="@+id/imageButton2"
@@ -130,17 +130,17 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/number_of_seats"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@+id/number_of_seats"
-            android:layout_width="213dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:inputType="number"
-            android:textAlignment="textEnd"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton2" />
+    <EditText
+        android:id="@+id/number_of_seats"
+        android:layout_width="115"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textAlignment="textEnd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton2" />
 
         <Button
             android:id="@+id/button"
