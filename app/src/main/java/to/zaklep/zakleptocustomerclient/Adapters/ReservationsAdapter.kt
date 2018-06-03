@@ -44,8 +44,8 @@ class ReservationsAdapter(var mContext: Context, var reservationsList: MutableLi
         holder.reservationHour.text = reservation.dateStart.substringAfter('T').substringBeforeLast(':')
         holder.cancelReservation.setOnClickListener {
             val builder = AlertDialog.Builder(mContext, android.R.style.Theme_Material_Light_Dialog_Alert)
-            builder.setTitle("Delete reservation")
-                    .setMessage("Are you sure?")
+            builder.setTitle("Usunąć rezerwacje?")
+                    .setMessage("Jesteś pewien?")
                     .setCancelable(true)
                     .setPositiveButton(android.R.string.yes, DialogInterface.OnClickListener { dialog, which ->
                         run {

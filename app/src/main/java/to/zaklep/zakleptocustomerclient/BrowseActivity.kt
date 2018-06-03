@@ -53,14 +53,17 @@ class BrowseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
 
         var adapter: RestaurantsAdapter = RestaurantsAdapter(this, filteredRestaurantList)
 
+        var position = 0
         //Downloading restaurants from api
         "restaurants".httpGet()
                 .responseObject<List<Restaurant>> { request, response, result ->
                     result.get().forEach {
                         RestaurantList.add(it)
                         filteredRestaurantList.add(it)
+                        adapter.notifyItemInserted(position)
+                        position++
                     }
-                    adapter.notifyDataSetChanged()
+
                 }
         //
 

@@ -1,5 +1,6 @@
 package to.zaklep.zakleptocustomerclient
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -26,6 +27,7 @@ class MakeReservationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        startService(Intent(this,NotificationService::class.java))
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         setContentView(R.layout.activity_make_reservation)
 

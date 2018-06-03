@@ -31,7 +31,7 @@ class APIClient {
         }
 
         private var Token: String = ""
-        private var Login: String = ""
+        public var Login: String = ""
     }
 
 

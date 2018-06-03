@@ -94,7 +94,7 @@
                 <Button
                     android:id="@+id/hour_before_button"
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="60dp"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="8dp"
@@ -107,7 +107,7 @@
                 <Button
                     android:id="@+id/hour_actual_button"
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="60dp"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="8dp"
@@ -120,7 +120,7 @@
                 <Button
                     android:id="@+id/hour_after_button"
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="60dp"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="8dp"

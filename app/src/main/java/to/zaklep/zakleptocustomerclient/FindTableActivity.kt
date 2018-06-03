@@ -142,7 +142,7 @@ class FindTableActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
             date_filter.text = SimpleDateFormat("yyyy/MM/dd ").format(Date(year - 1900, month, dayOfMonth))
             filteredDatetime[0] = SimpleDateFormat("yyyy/MM/dd ").format(Date(year - 1900, month, dayOfMonth))
-            adapter.notifyDataSetChanged()
+            adapter.notifyItemRangeChanged(0,adapter.itemCount)
         }
         datePickerDialog.show()
     }
@@ -151,7 +151,7 @@ class FindTableActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         val timePickerDialog = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
             time_filter.text = hourOfDay.toString().padStart(2, '0') + ":" + minute.toString().padStart(2, '0')
             filteredDatetime[1] = hourOfDay.toString().padStart(2, '0') + ":00"
-            adapter.notifyDataSetChanged()
+            adapter.notifyItemRangeChanged(0,adapter.itemCount)
         }, 15, 0, true)
         timePickerDialog.show()
 

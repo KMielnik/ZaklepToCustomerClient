@@ -55,6 +55,15 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".MakeReservationActivity" />
+        <service
+            android:name=".NotificationService"
+            android:label="@string/app_name">
+        <intent-filter>
+            <action android:name="your.app.domain.NotificationService" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        </service>
     </application>
 
 </manifest>
